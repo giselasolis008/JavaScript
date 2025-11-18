@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guía interactiva de JavaScript</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar neon-topbar site-header" role="banner">
+  <div class="left">
+    <button id="menuToggle" aria-label="Abrir menú" class="icon-btn">☰</button>
+
+    <!-- Enlace al inicio con logotipo a la izquierda -->
+    <a href="index.html" class="brand-link" aria-label="Ir a la página principal" style="display:flex;align-items:center;text-decoration:none;color:inherit;gap:10px">
+      <div class="brand" title="JS Guide" style="display:flex;align-items:center;gap:10px">
+        <!-- SVG neon logo -->
+        <svg class="logo-svg" viewBox="0 0 64 64" width="40" height="40" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#00fff0"/>
+              <stop offset="1" stop-color="#ff00d6"/>
+            </linearGradient>
+            <filter id="neon" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <circle cx="32" cy="32" r="28" fill="none" stroke="url(#g1)" stroke-width="2.5" opacity="0.16" filter="url(#neon)"/>
+          <circle cx="32" cy="32" r="22" fill="none" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
+          <text x="32" y="40" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif"
+                font-weight="700" font-size="22" fill="url(#g1)" style="filter:url(#neon);">JS</text>
+        </svg>
+
+        <!-- imagen fallback opcional -->
+        <img src="assets/logo.png" alt="Logo JS Guide" class="logo-img" onerror="this.style.display='none'">
+
+        <span class="brand-title">JS Guide</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="center" style="display:flex;align-items:center;gap:12px;flex:1">
+    <div style="display:flex;flex-direction:column;min-width:200px">
+      <h1 class="title" style="margin:0">Guía interactiva de JavaScript</h1>
+      <small style="color:var(--muted);margin-top:4px">Aprende con ejemplos ejecutables</small>
+    </div>
+
+    <!-- Zona de búsqueda principal (visible en la parte superior) -->
+    <form id="header-search-form" role="search" style="margin-left:18px;display:flex;align-items:center;gap:8px;flex:1;min-width:320px;max-width:760px">
+      <input id="header-search" name="q" type="search" placeholder="Buscar en el sitio (ej: tipos, funciones, operadores)..." aria-label="Buscar en el sitio"
+             style="padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);width:100%;background:rgba(0,0,0,0.18);color:var(--text)"/>
+      <button type="submit" id="header-search-btn" class="icon-btn" title="Buscar y ejecutar">🔎</button>
+      <select id="header-scope" aria-label="Ámbito de búsqueda" title="Ámbito" style="border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)">
+        <option value="all">Todo el sitio</option>
+        <option value="sections">Sólo secciones</option>
+        <option value="examples">Sólo ejemplos</option>
+      </select>
+    </form>
+
+    <!-- navegación general del sitio (enlaces principales) -->
+    <nav class="top-nav" aria-label="Navegación principal" style="margin-left:14px;display:flex;gap:8px;align-items:center">
+      <a class="icon-btn" href="index.html">Inicio</a>
+      <a class="icon-btn" href="#data-types">Tutoriales</a>
+      <a class="icon-btn" href="#functions">Ejemplos</a>
+      <a class="icon-btn" href="#objects">Referencia</a>
+      <a class="icon-btn" href="#io">Contacto</a>
+    </nav>
+  </div>
+
+  <div class="header-actions">
+    <button id="themeToggle" aria-label="Cambiar tema" class="icon-btn">🌓</button>
+    <button id="contactBtn" class="btn icon-btn" title="Contactos">📬</button>
+    <button id="runAll" class="btn neon-btn" title="Ejecutar ejemplos">Ejecutar ejemplos</button>
+  </div>
+</header>
+
+  <div class="layout">
+    <!-- Left column: navegación / menús secundarios / publicidad -->
+    <aside class="left-column card" id="leftColumn" aria-label="Columna izquierda">
+      <h3 style="margin-top:0">Navegación</h3>
+      <nav class="left-secondary-nav" style="margin:8px 0 12px">
+        <a href="#what-is" class="nav-link">¿Qué es JavaScript?</a><br/>
+        <a href="#data-types" class="nav-link">Tipos de datos</a><br/>
+        <a href="#operators" class="nav-link">Operadores</a><br/>
+        <a href="#functions" class="nav-link">Funciones</a><br/>
+      </nav>
+
+      <hr/>
+
+      <div class="ad" style="margin-top:12px;padding:12px;border-radius:8px;background:rgba(255,255,255,0.02);text-align:center">
+        <strong>Patrocinador</strong>
+        <p style="margin:8px 0 0 0;font-size:13px" class="muted">Anuncio / promo</p>
+        <button class="neon-btn" style="margin-top:10px;width:100%">Ver oferta</button>
+      </div>
+
+      <hr/>
+
+      <div style="margin-top:12px">
+        <strong>Índice rápido</strong>
+        <ul style="margin:8px 0 0 18px">
+          <li><a href="#variables" class="nav-link">Variables</a></li>
+          <li><a href="#control-structures" class="nav-link">Control</a></li>
+          <li><a href="#objects" class="nav-link">Objetos</a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main content (centro) -->
+    <main class="content">
+      <section id="what-is" class="card">
+        <h2>¿Qué es JavaScript?</h2>
+        <p>JavaScript es un lenguaje de programación que permite dotar de interactividad a las páginas web. Se ejecuta en el navegador y en servidores (Node.js). Es dinámico, basado en prototipos y multiparadigma.</p>
+      </section>
+
+      <section id="data-types" class="card collapsible">
+        <header class="card-header">
+          <h2>Tipos de datos (tipos, objetos y valores)</h2>
+          <div class="card-controls">
+            <button data-action="run" data-target="data-types-output">Ejecutar</button>
+            <button data-action="toggle">Colapsar</button>
+          </div>
+        </header>
+        <div class="card-body">
+          <p>Prueba un valor y elige una operación:</p>
+
+          <div class="example-controls">
+            <input id="data-types-input-value" placeholder='Ej: 123 ó "hola" ó true' />
+            <select id="data-types-action">
+              <option value="typeof">typeof</option>
+              <option value="Number">Number()</option>
+              <option value="String">String()</option>
+              <option value="Boolean">Boolean()</option>
+              <option value="parseInt">parseInt()</option>
+            </select>
+            <button class="neon-btn" data-action="run-input" data-target="data-types">Ejecutar con entrada</button>
+          </div>
+
+          <p>Salida:</p>
+          <pre id="data-types-output" class="output"></pre>
+        </div>
+      </section>
+
+      <section id="operators" class="card collapsible">
+        <header class="card-header">
+          <h2>Operadores y expresiones</h2>
+          <div class="card-controls">
+            <button data-action="run" data-target="operators-output">Ejecutar</button>
+            <button data-action="toggle">Colapsar</button>
+          </div>
+        </header>
+        <div class="card-body">
+          <p>Introduce dos valores y elige un operador:</p>
+
+          <div class="example-controls">
+            <input id="operators-a" placeholder='a (ej: "5" o 5)' />
+            <input id="operators-b" placeholder='b (ej: 3)' />
+            <select id="operators-op">
+              <option value="+num">+ (num)</option>
+              <option value="+concat">+ (concat)</option>
+              <option value="-">-</option>
+              <option value="*">*</option>
+              <option value="/">/</option>
+              <option value="==">==</option>
+              <option value="===">===</option>
+              <option value="&&">&&</option>
+              <option value="||">||</option>
+            </select>
+            <button class="neon-btn" data-action="run-input" data-target="operators">Ejecutar con entrada</button>
+          </div>
+
+          <p>Salida:</p>
+          <pre id="operators-output" class="output"></pre>
+        </div>
+      </section>
+
+      <section id="variables" class="card collapsible">
+        <header class="card-header">
+          <h2>Variables</h2>
+          <div class="card-controls">
+            <button data-action="run" data-target="variables-output">Ejecutar</button>
+            <button data-action="toggle">Colapsar</button>
+          </div>
+        </header>
+        <div class="card-body">
+          <p>Prueba con un número para el ejemplo:</p>
+
+          <div class="example-controls">
+            <input id="variables-n" placeholder="n (ej: 7)" />
+            <button class="neon-btn" data-action="run-input" data-target="variables">Ejecutar con entrada</button>
+          </div>
+
+          <p>Salida:</p>
+          <pre id="variables-output" class="output"></pre>
+        </div>
+      </section>
+
+      <section id="control-structures" class="card collapsible">
+        <header class="card-header">
+          <h2>Estructuras de control</h2>
+          <div class="card-controls">
+            <button data-action="run" data-target="control-structures-output">Ejecutar</button>
+            <button data-action="toggle">Colapsar</button>
+          </div>
+        </header>
+        <div class="card-body">
+          <p>Define un límite para los bucles y una clave/valor para for...in:</p>
+
+          <div class="example-controls">
+            <input id="control-count" placeholder="count (ej: 4)" />
+            <input id="control-obj-keys" placeholder="obj keys coma separadas (ej: a,b,c)" />
+            <button class="neon-btn" data-action="run-input" data-target="control-structures">Ejecutar con entrada</button>
+          </div>
+
+          <p>Salida:</p>
+          <pre id="control-structures-output" class="output"></pre>
+        </div>
+      </section>
+
+      <section id="functions" class="card collapsible">
+        <header class="card-header">
+          <h2>Funciones</h2>
+          <div class="card-controls">
+            <button data-action="run" data-target="functions-output">Ejecutar</button>
+            <button data-action="toggle">Colapsar</button>
+          </div>
+        </header>
+        <div class="card-body">
+          <p>Prueba funciones: sumar/mult/resta/closure/join:</p>
+
+          <div class="example-controls">
+            <input id="functions-a" placeholder="a (ej: 2)" />
+            <input id="functions-b" placeholder="b (ej: 3)" />
+            <input id="functions-x" placeholder="x para closure (ej: 5)" />
+            <input id="functions-join" placeholder="join partes separadas por coma (ej: a,b,c)" />
+            <select id="functions-op">
+              <option value="sumar">sumar</option>
+              <option value="mult">mult</option>
+              <option value="resta">resta</option>
+              <option value="closure">closure (makeAdder)</option>
+              <option value="join">join (rest)</option>
+            </select>
+            <button class="neon-btn" data-action="run-input" data-target="functions">Ejecutar con entrada</button>
+          </div>
+
+          <p>Salida:</p>
+          <pre id="functions-output" class="output"></pre>
+        </div>
+      </section>
+
+      <section id="objects" class="card collapsible">
+        <header class="card-header">
+          <h2>Objetos, propiedades y métodos</h2>
+          <div class="card-controls">
+            <button data-action="run" data-target="objects-output">Ejecutar</button>
+            <button data-action="toggle">Colapsar</button>
+          </div>
+        </header>
+        <div class="card-body">
+          <p>Crea un objeto persona y añade una propiedad:</p>
+
+          <div class="example-controls">
+            <input id="objects-name" placeholder="nombre (ej: Ana)" />
+            <input id="objects-age" placeholder="edad (ej: 25)" />
+            <input id="objects-profession" placeholder="profesión (ej: Dev)" />
+            <input id="objects-vehicle" placeholder="vehículo (ej: coche)" />
+            <button class="neon-btn" data-action="run-input" data-target="objects">Ejecutar con entrada</button>
+          </div>
+
+          <p>Salida:</p>
+          <pre id="objects-output" class="output"></pre>
+        </div>
+      </section>
+
+      <section id="io" class="card collapsible">
+        <header class="card-header">
+          <h2>Entrada y salida de datos</h2>
+          <div class="card-controls">
+            <button data-action="run" data-target="io-output">Ejecutar</button>
+            <button data-action="toggle">Colapsar</button>
+          </div>
+        </header>
+        <div class="card-body">
+          <p>Simula entrada (o permite prompt/alert si prefieres):</p>
+
+          <div class="example-controls">
+            <input id="io-name" placeholder="Nombre para IO (ej: Pepe)" />
+            <label style="display:inline-flex;align-items:center;gap:8px;margin-left:8px">
+              <input id="io-alert" type="checkbox" /> Mostrar alert
+            </label>
+            <button class="neon-btn" data-action="run-input" data-target="io">Ejecutar con entrada</button>
+          </div>
+
+          <p>Salida:</p>
+          <pre id="io-output" class="output"></pre>
+        </div>
+      </section>
+
+      <!-- Referencias (ubicadas arriba del pie de página) -->
+      <section id="references" class="card" style="margin-top:18px;padding:16px">
+        <h3 style="margin:0 0 8px 0">Referencias</h3>
+        <p class="muted" style="margin:0 0 12px 0">Fuentes confiables consultadas y recomendadas para profundizar en JavaScript.</p>
+        <ol style="margin:0 0 8px 18px">
+          <li style="margin-bottom:8px">
+            Mozilla Developer Network. (2024). JavaScript. MDN Web Docs. Recuperado de
+            <a href="https://developer.mozilla.org/es/docs/Web/JavaScript" target="_blank" rel="noopener">https://developer.mozilla.org/es/docs/Web/JavaScript</a>
+          </li>
+          <li style="margin-bottom:8px">
+            Flanagan, D. (2020). JavaScript: The Definitive Guide (7.ª ed.). O'Reilly Media.
+          </li>
+          <li style="margin-bottom:8px">
+            ECMA International. (2023). ECMAScript® Language Specification (ECMA-262). Recuperado de
+            <a href="https://www.ecma-international.org/ecma-262/" target="_blank" rel="noopener">https://www.ecma-international.org/ecma-262/</a>
+          </li>
+          <li style="margin-bottom:8px">
+            Rauschmayer, A. (2014). Speaking JavaScript. Recuperado de
+            <a href="http://speakingjs.com/" target="_blank" rel="noopener">http://speakingjs.com/</a>
+          </li>
+          <li style="margin-bottom:8px">
+            The Modern JavaScript Tutorial. (s. f.). javascript.info. Recuperado de
+            <a href="https://javascript.info/" target="_blank" rel="noopener">https://javascript.info/</a>
+          </li>
+        </ol>
+        <p class="muted" style="font-size:13px;margin:6px 0 0 0">
+          Ejemplo de cita APA: Autor/Organización. (Año). Título. Recuperado de URL
+        </p>
+      </section>
+
+      <!-- Pie de página completo -->
+      <footer class="site-footer neon-footer" role="contentinfo">
+        <div class="footer-inner" style="display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-start;padding:18px;border-radius:12px;margin-top:16px;">
+          <div style="min-width:220px;display:flex;gap:12px;align-items:center">
+            <svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true" style="flex:0 0 40px">
+              <defs><linearGradient id="gF" x1="0" x2="1"><stop offset="0" stop-color="#00fff0"/><stop offset="1" stop-color="#ff00d6"/></linearGradient></defs>
+              <circle cx="32" cy="32" r="22" fill="none" stroke="url(#gF)" stroke-width="3"/>
+              <text x="32" y="40" text-anchor="middle" font-family="Segoe UI, Roboto, Arial" font-weight="700" font-size="20" fill="url(#gF)">JS</text>
+            </svg>
+            <div>
+              <div style="font-weight:800;color:var(--neon-cyan)">JS Guide</div>
+              <small class="muted">Guía interactiva de JavaScript — Proyecto educativo</small>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start">
+            <div>
+              <h4 style="margin:0 0 8px 0">Enlaces</h4>
+              <nav style="display:flex;flex-direction:column;gap:6px">
+                <a href="index.html">Inicio</a>
+                <a href="#data-types">Tipos</a>
+                <a href="#functions">Funciones</a>
+                <a href="#operators">Operadores</a>
+                <a href="#objects">Objetos</a>
+              </nav>
+            </div>
+
+            <div>
+              <h4 style="margin:0 0 8px 0">Sitios relacionados</h4>
+              <nav style="display:flex;flex-direction:column;gap:6px">
+                <a href="https://developer.mozilla.org/es/" target="_blank" rel="noopener">MDN Web Docs</a>
+                <a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js</a>
+                <a href="https://javascript.info/" target="_blank" rel="noopener">javascript.info</a>
+              </nav>
+            </div>
+
+            <div>
+              <h4 style="margin:0 0 8px 0">Redes y contacto</h4>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <a href="mailto:contacto@jsguide.example">contacto@jsguide.example</a>
+                <span class="muted">Tel: +34 612 345 678</span>
+                <div style="display:flex;gap:8px;margin-top:6px">
+                  <a href="https://twitter.com/" target="_blank" rel="noopener">Twitter</a>
+                  <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+                  <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="min-width:240px;max-width:360px">
+            <h4 style="margin:0 0 8px 0">Políticas y asuntos legales</h4>
+            <small class="muted" style="display:block;margin-bottom:8px">
+              Autores: Ingrid & Josue
+            </small>
+
+            <details style="background:transparent;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)">
+              <summary style="cursor:pointer;font-weight:700">Política de privacidad</summary>
+              <p style="margin:8px 0 0 0;font-size:13px;color:var(--muted)">
+                Recopilamos únicamente datos mínimos necesarios para la funcionalidad del sitio (por ejemplo: entradas de ejemplos en el navegador). No vendemos ni compartimos datos personales con terceros. Los datos de formulario se procesan localmente en el navegador; si se envían al servidor, se hará con cifrado y sólo con su consentimiento.
+              </p>
+            </details>
+
+            <details style="background:transparent;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);margin-top:8px">
+              <summary style="cursor:pointer;font-weight:700">Términos legales y uso</summary>
+              <p style="margin:8px 0 0 0;font-size:13px;color:var(--muted)">
+                El contenido es de carácter educativo. No se garantiza la ausencia de errores. El uso del material es bajo su responsabilidad. Las marcas y nombres mencionados pertenecen a sus respectivos propietarios.
+              </p>
+            </details>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.02);margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+          <small class="muted">© <span id="copyright-year">2025</span> JS Guide. Todos los derechos reservados. — Ingrid & Josue</small>
+          <div style="display:flex;gap:12px;align-items:center">
+            <a href="#privacy" class="muted" style="text-decoration:underline">Política</a>
+            <a href="#legal" class="muted" style="text-decoration:underline">Aviso legal</a>
+            <a href="#contact" class="muted" style="text-decoration:underline">Contacto</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Right column: información adicional, enlaces y contenidos secundarios -->
+    <aside id="rightColumn" class="right-column card" aria-label="Columna derecha">
+      <h3 style="margin-top:0">Panel lateral</h3>
+
+      <section style="margin-top:8px">
+        <strong>Información</strong>
+        <p class="muted" style="margin:8px 0 0 0;font-size:13px">Consejos, referencias rápidas y enlaces útiles.</p>
+        <ul style="margin:8px 0 0 18px">
+          <li><a href="https://developer.mozilla.org/es/" target="_blank" rel="noopener">MDN Web Docs</a></li>
+          <li><a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js</a></li>
+        </ul>
+      </section>
+
+      <hr/>
+
+      <section style="margin-top:12px">
+        <strong>Contenido recomendado</strong>
+        <div style="margin-top:8px">
+          <article style="padding:8px;background:rgba(255,255,255,0.02);border-radius:8px">
+            <strong>Ejemplo rápido</strong>
+            <p style="margin:6px 0 0 0;font-size:13px" class="muted">Cómo usar closures en 1 minuto.</p>
+            <a href="#functions" class="neon-btn" style="display:inline-block;margin-top:8px">Abrir ejemplo</a>
+          </article>
+        </div>
+      </section>
+
+      <hr/>
+
+      <section style="margin-top:12px">
+        <strong>Contacto</strong>
+        <p style="margin:6px 0 0 0"><a href="#io" class="nav-link">Abrir sección IO</a></p>
+      </section>
+    </aside>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
+
+<!-- añadir script pequeño para año dinámico -->
+<script>
+  (function(){
+    const el = document.getElementById('copyright-year');
+    if(el) el.textContent = new Date().getFullYear();
+  })();
+</script>
